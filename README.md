@@ -25,6 +25,7 @@ atlas/
 │   │   ├── models.py       # SQLAlchemy models
 │   │   └── schema.py       # Pydantic request schemas
 │   └── routers/
+│       ├── __init__.py
 │       ├── users.py
 │       ├── books.py
 │       └── reverses.py
