@@ -28,6 +28,8 @@ atlas/
 │       ├── users.py
 │       ├── books.py
 │       └── reverses.py
+├── logger.py
+├── .gitignore
 ├── .env.example
 └── requirements.txt
 ```
