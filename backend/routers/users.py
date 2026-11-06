@@ -5,6 +5,7 @@ from database.models import Users
 from sqlalchemy import Session
 from typing import Annotated
 from passlib.context import CryptContext
+from logger import logger
 
 router = APIRouter(
     prefix=["/users"],
@@ -18,11 +19,11 @@ def put_user(validate: UserCreate, db: Session = Depends(get_users_db)):
 
     try:
         new_user = Users(
-            id = validate.user_id
+            id = validate.user_id,
             name = validate.user_name,
             age = validate.user_age,
-            detail = vaildate.user_detail,
-            password = pwd_context.hash(validate.user_passwors)
+            detail = validate.user_detail,
+            password = pwd_context.hash(validate.user_passwords)
         )
         db.add(new_user)
         db.commit()
@@ -34,11 +35,12 @@ def put_user(validate: UserCreate, db: Session = Depends(get_users_db)):
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code = 500, detail = str(e))
+        looger.error(f"Error in put_user: {str(e)}")
+        raise HTTPException(status_code = 500, detail ="Internal Server Error"))
 
 
 @router.get("/user/id{id}")
-def get_user(id: Annotrated[int, Query(gt = 0, le=1000000)], db: Session = Depends(get_users_db)):
+def get_user(id: Annotated[int, Query(gt = 0, le=1000000)], db: Session = Depends(get_users_db)):
     
     try:
         user = db.query(Users).filter(Users.id == id).first()
@@ -55,7 +57,8 @@ def get_user(id: Annotrated[int, Query(gt = 0, le=1000000)], db: Session = Depen
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        looger.error(f"Error in get_user: {str(e)}")
+        raise HTTPException(status_code = 500, detail ="Internal Server Error"))
 
 
 @router.put("/update/{id}/{user_name}/{password}/{new_name}/{new_age}")
@@ -81,7 +84,8 @@ def update_user(id: int, user_name: str, password: str, db: Session = Depends(ge
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code = 500, detail = str(e))
+        looger.error(f"Error in update_user: {str(e)}")
+        raise HTTPException(status_code = 500, detail ="Internal Server Error"))
 
 
 @router.delete("/delete/{user_id}/{user_name}/{user_password}")
@@ -102,4 +106,5 @@ def delete_user(user_id: int, user_name: str, user_password: str, db: Session = 
     except HTTPException:
         raise
     except Exception as e:
-        raise HTTPException(status_code = 500, detail = str(e))
+        looger.error(f"Error in delete_user: {str(e)}")
+        raise HTTPException(status_code = 500, detail ="Internal Server Error"))
