@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from database.database import Base, users_engine, books_engine, reverses_engine
 from fastapi.middleware.cors import CORSMiddleware
 from routers import (
     books,
@@ -7,6 +8,10 @@ from routers import (
 )
 
 app = FastAPI()
+
+Base.metadata.create_all(bind=users_engine)
+Base.metadata.create_all(bind=books_engine)
+Base.metadata.create_all(bind=reverses_engine)
 
 app.add_middleware(
     CORSMiddleware,
