@@ -1,6 +1,7 @@
 fastapi
-uvicorn[standerd]
+uvicorn[standard]
 pydantic
-sqlalchemy
+SQLAlchemy
+PyMySQL
 passlib
-dotenv
+python-dotenv
