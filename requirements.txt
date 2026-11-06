@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standerd]
+pydantic
+sqlalchemy
+passlib
+dotenv
