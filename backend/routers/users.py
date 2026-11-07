@@ -8,7 +8,7 @@ from passlib.context import CryptContext
 from logger import logger
 
 router = APIRouter(
-    prefix=["/users"],
+    prefix="/users",
     tags=["users"]
 )
 
