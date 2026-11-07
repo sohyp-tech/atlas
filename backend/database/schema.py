@@ -10,7 +10,7 @@ class UserCreate(BaseModel):
 class BookCreate(BaseModel):
     book_author: str
     book_title: str
-    book_cont: str
+    book_content: str
 
 class ReverseCreate(BaseModel):
     reverser_name: str
